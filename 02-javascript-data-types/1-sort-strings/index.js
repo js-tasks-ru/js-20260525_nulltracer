@@ -17,3 +17,5 @@ export function sortStrings(arr, param = 'asc') {
 
   return param === 'asc' ? sortedArray : sortedArray.reverse();
 }
+
+}

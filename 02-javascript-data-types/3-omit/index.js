@@ -5,5 +5,10 @@
  * @returns {object} - returns the new object
  */
 export const omit = (obj, ...fields) => {
+  const fieldSet = new Set(fields);
 
+  const pickedEntries = Object.entries(obj)
+    .filter(([key]) => !fieldSet.has(key));
+
+  return Object.fromEntries(pickedEntries);
 };

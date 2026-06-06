@@ -10,5 +10,5 @@ const collator = new Intl.Collator(["ru", "en"], { caseFirst: "upper" });
 export function sortStrings(arr, param = "asc") {
   const sortedArray = arr.toSorted(collator.compare);
 
-  return param === "asc" ? sortedArray : sortedArray.reverse();
+  return param === "asc" ? sortedArray : sortedArray.toReversed();
 }

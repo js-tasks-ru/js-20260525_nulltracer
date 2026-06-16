@@ -5,7 +5,7 @@ interface Options {
   label: string;
   value: number;
   link: string;
-  formatHeading: (value: string) => string;
+  formatHeading: (value: number) => string;
 }
 
 type Status = "loading" | "ready";
@@ -24,11 +24,11 @@ export default class ColumnChart {
     label = "",
     value = 0,
     link = "",
-    formatHeading = (value) => value,
+    formatHeading = (value) => value.toLocaleString(),
   }: Partial<Options> = {}) {
     this.data = data;
     this.label = label;
-    this.value = formatHeading(value.toLocaleString());
+    this.value = formatHeading(value);
     this.link = link;
     this.chartHeight = 50;
 
@@ -141,7 +141,7 @@ export default class ColumnChart {
   private addEventListeners = (): void => {};
   private removeEventListeners = (): void => {};
 
-  private remove = (): void => {
+  public remove = (): void => {
     if (this.element instanceof HTMLElement) {
       this.element.remove();
     }

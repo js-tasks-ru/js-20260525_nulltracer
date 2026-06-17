@@ -15,9 +15,10 @@ export default class ColumnChart {
   private label: string;
   private value: string;
   private link: string;
+  private subElements: Record<string, HTMLElement> = {};
+
   public chartHeight: number;
   public element: HTMLElement | null = null;
-  private subElements: Record<string, HTMLElement> = {};
 
   constructor({
     data = [],
@@ -41,7 +42,9 @@ export default class ColumnChart {
   };
 
   private get status(): Status {
-    if (!this.data.length) return "loading";
+    if (!this.data.length) {
+      return "loading";
+    }
 
     return "ready";
   }
@@ -69,12 +72,12 @@ export default class ColumnChart {
   };
 
   private renderLink = (): string => {
-    const { link } = this;
-
-    if (!link) return "";
+    if (!this.link) {
+      return "";
+    }
 
     return `
-      <a href="/${link}" class="column-chart__link">View all</a>
+      <a href="/${this.link}" class="column-chart__link">View all</a>
     `;
   };
 
@@ -106,15 +109,15 @@ export default class ColumnChart {
       return "";
     }
 
-    const maxValue = Math.max(...this.data);
+    const maxValue = Math.max(...data);
     const scale = chartHeight / maxValue;
 
     const renderColumn = (item: number): string => {
       const colHeight = Math.floor(item * scale);
-      const tooltip = ((item / maxValue) * 100).toFixed(0) + "%";
+      const percent = ((item / maxValue) * 100).toFixed(0) + "%";
 
       return `
-          <div style="--value: ${colHeight}" data-tooltip="${tooltip}"></div>
+          <div style="--value: ${colHeight}" data-tooltip="${percent}"></div>
         `;
     };
 

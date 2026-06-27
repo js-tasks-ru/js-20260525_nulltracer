@@ -5,29 +5,32 @@ function formatDuration(duration: number): string {
 }
 
 interface Options {
-  duration: number;
-  type: "success" | "error";
+  duration?: number;
+  type?: "success" | "error";
 }
+
+type NormalizedOptions = Required<Options>;
 
 export default class NotificationMessage {
   static activeNotification: NotificationMessage | null = null;
 
-  message: string;
   element: HTMLElement | null = null;
   timeoutId: number | null = null;
+  private options: NormalizedOptions;
 
   constructor(
-    message: string,
-    private options: Options = {
-      duration: 2000,
-      type: "success",
-    },
+    private message: string,
+    options: Options = {},
   ) {
     if (NotificationMessage.activeNotification) {
       NotificationMessage.activeNotification.destroy();
     }
 
-    this.message = message;
+    this.options = {
+      duration: 2000,
+      type: "success",
+      ...options,
+    };
     this.element = createElement(this.template);
 
     NotificationMessage.activeNotification = this;

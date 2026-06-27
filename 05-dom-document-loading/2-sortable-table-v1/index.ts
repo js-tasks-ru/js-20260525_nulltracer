@@ -32,7 +32,6 @@ export default class SortableTable {
   ) {
     this.element = createElement(this.template);
     this.subElements = this.getSubElements();
-    console.dir(this);
   }
 
   sort(field: string, order: SortOrder): void {

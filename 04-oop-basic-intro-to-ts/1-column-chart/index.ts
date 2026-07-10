@@ -110,6 +110,11 @@ export default class ColumnChart {
     }
 
     const maxValue = Math.max(...data);
+
+    if (maxValue === 0) {
+      return "";
+    }
+
     const scale = chartHeight / maxValue;
 
     const renderColumn = (item: number): string => {
@@ -165,7 +170,7 @@ export default class ColumnChart {
     if (!this.element || !body) return;
 
     this.data = data;
-    this.element.className = this.getClassName();
+    this.element.classList.toggle("column-chart_loading", !this.data.length);
     body.innerHTML = this.renderChart();
   };
 
